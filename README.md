@@ -99,6 +99,9 @@ To get a local copy up and running follow these simple example steps.
 
 ### Prerequisites
 
+Terraform: Deployed with version 1.0.6
+Python: AWS lambda runtime with version 3.8
+
 <!--
 
 This is an example of how to list things you need to use the software and how to install them.
