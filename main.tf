@@ -1,6 +1,6 @@
 locals {
-  table_name = "sg-checker-table"
-  attribute_name = "SecurityGroupId"
+  table_name          = "sg-checker-table"
+  attribute_name      = "SecurityGroupId"
   schedule_expression = "rate(10 minutes)"
 }
 
@@ -12,11 +12,11 @@ resource "aws_lambda_function" "check_sgs" {
   role             = aws_iam_role.iam_for_lambda.arn
   handler          = "sg-checker.handler"
   runtime          = "python3.8"
-  timeout = 10
+  timeout          = 10
 
   environment {
     variables = {
-      table_name = local.table_name
+      table_name     = local.table_name
       attribute_name = local.attribute_name
     }
   }
@@ -67,15 +67,15 @@ resource "aws_iam_policy" "dynamodb-policy" {
     Statement = [
       {
         Action = [
-            "dynamodb:PutItem",
-            "dynamodb:UpdateItem",
-            "dynamodb:DeleteItem",
-            "dynamodb:BatchWriteItem",
-            "dynamodb:GetItem",
-            "dynamodb:BatchGetItem",
-            "dynamodb:Scan",
-            "dynamodb:Query",
-            "dynamodb:ConditionCheckItem"
+          "dynamodb:PutItem",
+          "dynamodb:UpdateItem",
+          "dynamodb:DeleteItem",
+          "dynamodb:BatchWriteItem",
+          "dynamodb:GetItem",
+          "dynamodb:BatchGetItem",
+          "dynamodb:Scan",
+          "dynamodb:Query",
+          "dynamodb:ConditionCheckItem"
         ]
         Effect   = "Allow"
         Resource = "arn:aws:dynamodb:${var.region}:${data.aws_caller_identity.current.account_id}:table/${aws_dynamodb_table.sg_dynamo_table.name}"
@@ -87,25 +87,25 @@ resource "aws_iam_policy" "dynamodb-policy" {
 resource "aws_lambda_permission" "allow_cloudwatch_to_call_lambda" {
   statement_id  = "AllowExecutionFromCloudWatch"
   action        = "lambda:InvokeFunction"
-  function_name = "${aws_lambda_function.check_sgs.function_name}"
+  function_name = aws_lambda_function.check_sgs.function_name
   principal     = "events.amazonaws.com"
-  source_arn    = "${aws_cloudwatch_event_rule.event_rule.arn}"
+  source_arn    = aws_cloudwatch_event_rule.event_rule.arn
 }
 
 #DynamoDB table definition
-resource "aws_dynamodb_table" "sg_dynamo_table" { 
-   name = local.table_name
-   billing_mode = "PROVISIONED" 
-   read_capacity = "30" 
-   write_capacity = "30" 
-   attribute { 
-      name = local.attribute_name 
-      type = "S" 
-   } 
-   hash_key = local.attribute_name 
-   point_in_time_recovery { enabled = true } 
-   server_side_encryption { enabled = false } 
-   lifecycle { ignore_changes = [ "write_capacity", "read_capacity" ] }
+resource "aws_dynamodb_table" "sg_dynamo_table" {
+  name           = local.table_name
+  billing_mode   = "PROVISIONED"
+  read_capacity  = "30"
+  write_capacity = "30"
+  attribute {
+    name = local.attribute_name
+    type = "S"
+  }
+  hash_key = local.attribute_name
+  point_in_time_recovery { enabled = true }
+  server_side_encryption { enabled = false }
+  lifecycle { ignore_changes = ["write_capacity", "read_capacity"] }
 }
 
 #Cloudwatch rule definition
@@ -117,9 +117,9 @@ resource "aws_cloudwatch_event_rule" "event_rule" {
 
 resource "aws_cloudwatch_event_target" "sg_checker_target" {
   depends_on = [
-     aws_cloudwatch_event_rule.event_rule
+    aws_cloudwatch_event_rule.event_rule
   ]
-  rule      = "${aws_cloudwatch_event_rule.event_rule.name}"
+  rule      = aws_cloudwatch_event_rule.event_rule.name
   target_id = "lambda"
-  arn       = "${aws_lambda_function.check_sgs.arn}"
+  arn       = aws_lambda_function.check_sgs.arn
 }
