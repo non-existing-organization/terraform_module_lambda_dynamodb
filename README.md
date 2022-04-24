@@ -100,6 +100,7 @@ To get a local copy up and running follow these simple example steps.
 ### Prerequisites
 
 Terraform: Deployed with version 1.0.6
+
 Python: AWS lambda runtime with version 3.8
 
 <!--
@@ -119,7 +120,7 @@ Install Terraform
 
 https://learn.hashicorp.com/tutorials/terraform/install-cli
 
-Install AWS cli and configure your AWS credentials (you should have a AWS already)
+Install AWS cli and configure your AWS credentials (you should have a AWS account already)
 
 https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html
 https://docs.aws.amazon.com/cli/latest/userguide/getting-started-quickstart.html
