@@ -162,7 +162,7 @@ terraform plan
 terraform apply 
 ```
 
-There's a locals block in the *main.tf* file to modify a couple of fields that are consumed by several parts of the projects. The *table name*, *attribue name* for that table and *schedule expression* that defines the rate of how frequent the Cloudwatch event rule executes the lambda function.
+There's a locals block in the *main.tf* file to modify a couple of fields that are consumed by several parts of the project. The *table name*, *attribue name* for that table and *schedule expression* that defines the rate of how frequent the Cloudwatch event rule executes the lambda function.
 
 <!--
 Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
