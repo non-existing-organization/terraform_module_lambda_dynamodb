@@ -51,6 +51,10 @@
 
 ## About The Project
 
+This is a simple project that involves a python script that scans the Ec2 API in search of a certain criteria (currently is fixed to a SG (Security Group) rule matching *0.0.0.0/0*) and then store that SG id in a DynamoDB table. If that criteria is "remediated" the script will delete that SG id from the table, that way you can keep a live record of SG ids you wish to keep monitored. Everything is glued together with terraform which will zip the python script and deploy it to the lambda function.
+
+I made this project as part of my learning process since i did not have that much practice with the DynamoDB service, but also i wanted to glue everything with python and terraform and have some fun along the way.
+
 <!--
 There are many great README templates available on GitHub, however, I didn't find one that really suit my needs so I created this enhanced one. I want to create a README template so amazing that it'll be the last one you ever need.
 
@@ -67,6 +71,12 @@ A list of commonly used resources that I find helpful are listed in the acknowle
 
 ### Built With
 
+Terraform
+
+Python
+
+AWS services (DynamoDB, IAM, Lambda, Cloudwatch)
+
 <!--
 This section should list any major frameworks that you built your project using. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
 
@@ -80,6 +90,7 @@ This section should list any major frameworks that you built your project using.
 <!-- GETTING STARTED -->
 
 ## Getting Started
+
 
 <!--
 This is an example of how you may give instructions on setting up your project locally.
@@ -100,6 +111,17 @@ npm install npm@latest -g
 -->
 
 ### Installation
+
+Install Terraform
+
+https://learn.hashicorp.com/tutorials/terraform/install-cli
+
+Install AWS cli and configure your AWS credentials (you should have a AWS already)
+
+https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html
+https://docs.aws.amazon.com/cli/latest/userguide/getting-started-quickstart.html
+
+
 
 <!--
 1. Get a free API Key at [https://example.com](https://example.com)
@@ -127,6 +149,16 @@ const API_KEY = 'ENTER YOUR API';
 <!-- USAGE EXAMPLES -->
 
 ## Usage
+
+The whole solution will be deployed via terraform
+
+```
+terraform init
+terraform plan
+terraform apply 
+```
+
+There's a locals block in the *main.tf* file to modify a couple of fields that are consumed by several parts of the projects. The *table name*, *attribue name* for that table and *schedule expression* that defines the rate of how frequent the Cloudwatch event rule executes the lambda function.
 
 See the [USAGE.md](https://github.com/not-existing-organization/terraform_module_security_group_checker/raw/master/USAGE.md) for the `terraform-docs` output
 
