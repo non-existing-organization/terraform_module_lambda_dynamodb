@@ -1,16 +1,16 @@
 locals {
-  table_name          = "sg-checker-table"
-  attribute_name      = "SecurityGroupId"
-  schedule_expression = "rate(10 minutes)"
+  table_name          = var.table_name
+  attribute_name      = var.attribute_name
+  schedule_expression = var.schedule_expression
 }
 
 #Lambda definition
 resource "aws_lambda_function" "check_sgs" {
-  filename         = "sg-checker.zip"
-  function_name    = "security_group_checker_lambda"
+  filename         = var.output_path
+  function_name    = var.function_name
   source_code_hash = data.archive_file.lambda_zip.output_base64sha256
   role             = aws_iam_role.iam_for_lambda.arn
-  handler          = "sg-checker.handler"
+  handler          = var.handler
   runtime          = "python3.8"
   timeout          = 10
 
@@ -24,7 +24,8 @@ resource "aws_lambda_function" "check_sgs" {
 
 #Iam permissions
 resource "aws_iam_role" "iam_for_lambda" {
-  name = "iam_for_lambda"
+  #name = "iam_for_lambda"
+  name = var.lambda_role_name
 
   assume_role_policy = <<EOF
 {
@@ -60,7 +61,7 @@ resource "aws_iam_role_policy_attachment" "dynamodb_full" {
 
 
 resource "aws_iam_policy" "dynamodb-policy" {
-  name        = "sg-checker-dynamodb-policy"
+  name        = var.dynamodb_policy_name
   description = "Sg checker dynamodb policy"
   policy = jsonencode({
     Version = "2012-10-17"
@@ -110,7 +111,7 @@ resource "aws_dynamodb_table" "sg_dynamo_table" {
 
 #Cloudwatch rule definition
 resource "aws_cloudwatch_event_rule" "event_rule" {
-  name                = "trigger-sg-checker-lambda"
+  name                = var.cloudwatch_event_rule_name
   description         = "Rule that triggers the sg checker lambda"
   schedule_expression = local.schedule_expression
 }
