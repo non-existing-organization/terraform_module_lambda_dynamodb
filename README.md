@@ -231,7 +231,7 @@ Santiago - elfmg1@gmail.com
 [license-shield]: https://img.shields.io/github/license/not-existing-organization/terraform_module_security_group_checker?style=for-the-badge
 [license-url]: https://github.com/not-existing-organization/terraform_module_security_group_checker/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
-[linkedin-url]: https://linkedin.com/in/johnstilia/
+[linkedin-url]: https://www.linkedin.com/in/santiago-delcampo/
 [product-screenshot]: .assets/screenshot.png
 [ask-me-anything]: https://img.shields.io/badge/Ask%20me-anything-1abc9c.svg?style=for-the-badge
 [personal-page]: https://github.com/not-existing-organization
