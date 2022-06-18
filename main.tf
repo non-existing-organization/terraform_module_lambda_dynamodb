@@ -5,7 +5,7 @@ locals {
 }
 
 #Lambda definition
-resource "aws_lambda_function" "check_sgs" {
+resource "aws_lambda_function" "lambda_function" {
   filename         = var.output_path
   function_name    = var.function_name
   source_code_hash = var.source_code_hash
@@ -87,7 +87,7 @@ resource "aws_iam_policy" "dynamodb-policy" {
 resource "aws_lambda_permission" "allow_cloudwatch_to_call_lambda" {
   statement_id  = "AllowExecutionFromCloudWatch"
   action        = "lambda:InvokeFunction"
-  function_name = aws_lambda_function.check_sgs.function_name
+  function_name = aws_lambda_function.lambda_function.function_name
   principal     = "events.amazonaws.com"
   source_arn    = aws_cloudwatch_event_rule.event_rule.arn
 }
@@ -121,5 +121,5 @@ resource "aws_cloudwatch_event_target" "sg_checker_target" {
   ]
   rule      = aws_cloudwatch_event_rule.event_rule.name
   target_id = "lambda"
-  arn       = aws_lambda_function.check_sgs.arn
+  arn       = aws_lambda_function.lambda_function.arn
 }
