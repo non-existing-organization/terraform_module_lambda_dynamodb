@@ -18,6 +18,17 @@ variable "function_name" {
   description = "Name of the aws lambda function"
 }
 
+variable "lambda_runtime" {
+  type = string
+  description = "Lambda runtime i.e <python3.8>"
+  default = "python3.8"
+}
+
+variable "source_code_hash" {
+  type = string
+  description = "hash of the current zip file, changes in the function code will produce an update of the lambda function"
+}
+
 variable "table_name" {
   type        = string
   description = "Name of the DynamoDB table"
