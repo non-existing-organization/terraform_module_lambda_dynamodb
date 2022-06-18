@@ -8,10 +8,10 @@ locals {
 resource "aws_lambda_function" "check_sgs" {
   filename         = var.output_path
   function_name    = var.function_name
-  source_code_hash = data.archive_file.lambda_zip.output_base64sha256
+  source_code_hash = var.source_code_hash
   role             = aws_iam_role.iam_for_lambda.arn
   handler          = var.handler
-  runtime          = "python3.8"
+  runtime          = var.lambda_runtime
   timeout          = 10
 
   environment {
