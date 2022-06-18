@@ -21,9 +21,11 @@ No requirements.
 | function\_name | Name of the aws lambda function | `string` | n/a | yes |
 | handler | Handler for the aws lambda function, the structure should be the following --> filename.mainfunction | `string` | n/a | yes |
 | lambda\_role\_name | Name of the aws lambda execution role | `string` | n/a | yes |
+| lambda\_runtime | Lambda runtime i.e <python3.8> | `string` | `"python3.8"` | no |
 | output\_path | The path and name of the resulting zip file | `string` | n/a | yes |
 | region | n/a | `string` | `"us-east-1"` | no |
 | schedule\_expression | Cloudwatch rule rate expression for how frequent you want the lambda function to run | `string` | n/a | yes |
+| source\_code\_hash | hash of the current zip file, changes in the function code will produce an update of the lambda function | `string` | n/a | yes |
 | source\_file | The path in your filesystem where your script is located | `string` | n/a | yes |
 | table\_name | Name of the DynamoDB table | `string` | n/a | yes |
 
