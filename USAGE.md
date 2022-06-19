@@ -25,7 +25,6 @@ No requirements.
 | region | n/a | `string` | `"us-east-1"` | no |
 | schedule\_expression | Cloudwatch rule rate expression for how frequent you want the lambda function to run | `string` | n/a | yes |
 | source\_code\_hash | hash of the current zip file, changes in the function code will produce an update of the lambda function | `string` | n/a | yes |
-| source\_file | The path in your filesystem where your script is located | `string` | n/a | yes |
 | table\_name | Name of the DynamoDB table | `string` | n/a | yes |
 
 ## Outputs

@@ -61,7 +61,7 @@ resource "aws_iam_role_policy_attachment" "dynamodb_full" {
 
 resource "aws_iam_policy" "dynamodb-policy" {
   name        = var.dynamodb_policy_name
-  description = "Sg checker dynamodb policy"
+  description = "Dynamodb policy"
   policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
@@ -78,7 +78,7 @@ resource "aws_iam_policy" "dynamodb-policy" {
           "dynamodb:ConditionCheckItem"
         ]
         Effect   = "Allow"
-        Resource = "arn:aws:dynamodb:${var.region}:${data.aws_caller_identity.current.account_id}:table/${aws_dynamodb_table.sg_dynamo_table.name}"
+        Resource = "arn:aws:dynamodb:${var.region}:${data.aws_caller_identity.current.account_id}:table/${aws_dynamodb_table.dynamodb_table.name}"
       },
     ]
   })
@@ -93,7 +93,7 @@ resource "aws_lambda_permission" "allow_cloudwatch_to_call_lambda" {
 }
 
 #DynamoDB table definition
-resource "aws_dynamodb_table" "sg_dynamo_table" {
+resource "aws_dynamodb_table" "dynamodb_table" {
   name           = local.table_name
   billing_mode   = "PROVISIONED"
   read_capacity  = "30"
@@ -111,11 +111,11 @@ resource "aws_dynamodb_table" "sg_dynamo_table" {
 #Cloudwatch rule definition
 resource "aws_cloudwatch_event_rule" "event_rule" {
   name                = var.cloudwatch_event_rule_name
-  description         = "Rule that triggers the sg checker lambda"
+  description         = "Rule that triggers lambda function"
   schedule_expression = local.schedule_expression
 }
 
-resource "aws_cloudwatch_event_target" "sg_checker_target" {
+resource "aws_cloudwatch_event_target" "cloudwatch_event_target" {
   depends_on = [
     aws_cloudwatch_event_rule.event_rule
   ]

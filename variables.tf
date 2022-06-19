@@ -3,11 +3,6 @@ variable "region" {
   default = "us-east-1"
 }
 
-variable "source_file" {
-  type        = string
-  description = "The path in your filesystem where your script is located"
-}
-
 variable "output_path" {
   type        = string
   description = "The path and name of the resulting zip file"
@@ -19,13 +14,13 @@ variable "function_name" {
 }
 
 variable "lambda_runtime" {
-  type = string
+  type        = string
   description = "Lambda runtime i.e <python3.8>"
-  default = "python3.8"
+  default     = "python3.8"
 }
 
 variable "source_code_hash" {
-  type = string
+  type        = string
   description = "hash of the current zip file, changes in the function code will produce an update of the lambda function"
 }
 
