@@ -48,9 +48,9 @@
 
 ## About The Project
 
-This is a simple project that involves a python script that scans the Ec2 API in search of a certain criteria (currently is fixed to a SG (Security Group) rule matching *0.0.0.0/0*) and then store that SG id in a DynamoDB table. If that criteria is "remediated" the script will delete that SG id from the table, that way you can keep a live record of SG ids you wish to keep monitored. Everything is glued together with terraform which will zip the python script and deploy it to the lambda function.
+This is a simple terraform module that deploys an Lambda function and a DynamoDB table and the necessary IAM permissions to allow interaction between them. Inside this same module there's a simple example of how the module is invoked and a simple python script that scans the Security Groups in the region and stores any SG with a "0.0.0.0/0" rule in the DynamoDB table.
 
-I made this project as part of my learning process since i did not have that much practice with the DynamoDB service, but also i wanted to glue everything with python and terraform and have some fun along the way.
+The user must provide it's own script, runtime and source code hash.
 
 
 ### Built With
