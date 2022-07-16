@@ -113,6 +113,7 @@ resource "aws_cloudwatch_event_rule" "event_rule" {
   name                = var.cloudwatch_event_rule_name
   description         = "Rule that triggers lambda function"
   schedule_expression = local.schedule_expression
+  is_enabled = var.cw_event_is_enabled
 }
 
 resource "aws_cloudwatch_event_target" "cloudwatch_event_target" {

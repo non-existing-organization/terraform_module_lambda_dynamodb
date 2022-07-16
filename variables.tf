@@ -58,3 +58,8 @@ variable "lambda_role_name" {
   type        = string
   description = "Name of the aws lambda execution role"
 }
+
+variable "cw_event_is_enabled" {
+  type = bool
+  description = "Mark if CW event rule is enabled or not"
+}
