@@ -3,26 +3,51 @@ variable "region" {
   default = "us-east-1"
 }
 
-variable "output_path" {
-  type        = string
-  description = "The path and name of the resulting zip file"
+variable "function_params" {
+  type = list(object({
+    output_path = string
+    function_name = string
+    source_code_hash = string
+    handler = string
+    lambda_runtime = string
+  }))
 }
 
-variable "function_name" {
-  type        = string
-  description = "Name of the aws lambda function"
-}
+# variable "function_params" {
+#   type = tomap({
+#     output_path = string
+#     function_name = string
+#     source_code_hash = string
+#     handler = string
+#     lambda_runtime = string
+#   })
+# }
 
-variable "lambda_runtime" {
-  type        = string
-  description = "Lambda runtime i.e <python3.8>"
-  default     = "python3.8"
-}
+# variable "output_path" {
+#   type        = string
+#   description = "The path and name of the resulting zip file"
+# }
 
-variable "source_code_hash" {
-  type        = string
-  description = "hash of the current zip file, changes in the function code will produce an update of the lambda function"
-}
+# variable "function_name" {
+#   type        = string
+#   description = "Name of the aws lambda function"
+# }
+
+# variable "lambda_runtime" {
+#   type        = string
+#   description = "Lambda runtime i.e <python3.8>"
+#   default     = "python3.8"
+# }
+
+# variable "source_code_hash" {
+#   type        = string
+#   description = "hash of the current zip file, changes in the function code will produce an update of the lambda function"
+# }
+
+# variable "handler" {
+#   type        = string
+#   description = "Handler for the aws lambda function, the structure should be the following --> filename.mainfunction"
+# }
 
 variable "table_name" {
   type        = string
@@ -37,11 +62,6 @@ variable "attribute_name" {
 variable "schedule_expression" {
   type        = string
   description = "Cloudwatch rule rate expression for how frequent you want the lambda function to run"
-}
-
-variable "handler" {
-  type        = string
-  description = "Handler for the aws lambda function, the structure should be the following --> filename.mainfunction"
 }
 
 variable "dynamodb_policy_name" {
