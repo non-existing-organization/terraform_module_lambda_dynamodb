@@ -15,10 +15,13 @@ resource "aws_lambda_function" "lambda_function" {
   timeout          = 10
 
   environment {
-    variables = {
-      table_name     = local.table_name
-      attribute_name = local.attribute_name
-    }
+    variables = merge(
+      {
+        table_name     = local.table_name
+        attribute_name = local.attribute_name
+      },
+      var.lambda_vars
+    )
   }
 }
 

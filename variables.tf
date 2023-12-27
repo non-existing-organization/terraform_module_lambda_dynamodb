@@ -63,3 +63,7 @@ variable "cw_event_is_enabled" {
   type = bool
   description = "Mark if CW event rule is enabled or not"
 }
+
+variable "lambda_vars" {
+    default = {}
+}
