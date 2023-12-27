@@ -14,12 +14,6 @@ resource "aws_lambda_function" "lambda_function" {
   runtime          = var.lambda_runtime
   timeout          = 10
 
-  # environment {
-  #   variables = {
-  #     table_name     = local.table_name
-  #     attribute_name = local.attribute_name
-  #   }
-  # }
   environment {
     variables = merge(
       {
